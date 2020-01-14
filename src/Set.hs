@@ -1,4 +1,3 @@
--- implementation based on BST
 module Set
   ( Set(..)
   , closure
@@ -28,15 +27,17 @@ instance Ord a => Ord (Set a) where
 
 instance Foldable Set where
   foldMap f Empty = mempty
-  foldMap f (Node l k r) = foldMap f l `mappend` f k `mappend` foldMap f r
+  foldMap f (Node l k r) = foldMap f l <> f k <> foldMap f r
 
-insert :: (Ord a) => a -> Set a -> Set a
-insert value Empty = Node Empty value Empty
-insert value (Node left root right) =
-  case compare value root of
-    EQ -> Node left value right
-    LT -> Node (insert value left) root right
-    GT -> Node left root (insert value right)
+empty :: Set a
+empty = Empty
+
+filter :: (Ord a) => (a -> Bool) -> Set a -> Set a
+filter f = fromList . Prelude.filter f . toList
+
+fromList :: (Ord a) => [a] -> Set a
+fromList [] = Empty
+fromList (x:xs) = insert x $ fromList xs
 
 union :: (Ord a) => Set a -> Set a -> Set a
 union tree Empty = tree
@@ -48,22 +49,20 @@ intersection Empty _ = Empty
 intersection _ Empty = Empty
 intersection a b = fromList $ [aa | aa <- toList a, bb <- toList b, aa == bb]
 
-empty :: Set a
-empty = Empty
-
-fromList :: (Ord a) => [a] -> Set a
-fromList [] = Empty
-fromList (x:xs) = insert x $ fromList xs
-
 toList :: Set a -> [a]
 toList Empty = []
 toList (Node left root right) = (toList left) ++ [root] ++ (toList right)
 
-filter :: (Ord a) => (a -> Bool) -> Set a -> Set a
-filter f = fromList . Prelude.filter f . toList
-
 map :: (Ord b) => (a -> b) -> Set a -> Set b
 map f = fromList . Prelude.map f . toList
+
+insert :: (Ord a) => a -> Set a -> Set a
+insert value Empty = Node Empty value Empty
+insert value (Node left root right) =
+  case compare value root of
+    EQ -> Node left value right
+    LT -> Node (insert value left) root right
+    GT -> Node left root (insert value right)
 
 powerset :: (Ord a) => (Set a) -> (Set (Set a))
 powerset a = fromList . Prelude.map fromList $ (f . toList $ a)

@@ -1,16 +1,3 @@
-{- |
-Module      :  NFA
-Description :  <optional short text displayed on contents page>
-Copyright   :  (c) Tomasz Homoncik, 2020
-License     :  MIT
-
-Maintainer  :  tjhomoncik@gmail.com
-Stability   :  experimental
-Portability :  portable
-
-Here is a longer description of this module, containing some
-commentary with @some markup@.
--}
 module NFA
   ( NFA(..)
   ) where
@@ -24,7 +11,6 @@ data NFA state input =
     (state -> Maybe input -> (Set state))
     (Set state)
     (Set state)
-  -- states alphabet (transition function) (initial states) (accepting states)
 
 instance (Ord a, Ord b, Show a, Show b) => Show (NFA a b) where
   showsPrec _ (NFA states alphabet transition starting accepting) =

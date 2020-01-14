@@ -1,16 +1,3 @@
-{- |
-Module      :  DFA
-Description :  <optional short text displayed on contents page>
-Copyright   :  (c) Tomasz Homoncik, 2020
-License     :  MIT
-
-Maintainer  :  tjhomoncik@gmail.com
-Stability   :  experimental
-Portability :  portable
-
-Here is a longer description of this module, containing some
-commentary with @some markup@.
--}
 module DFA
   ( DFA(..)
   , neighbors
@@ -21,7 +8,6 @@ import Set
 
 data DFA state input =
   DFA (Set state) (Set input) (state -> input -> state) state (Set state)
-  -- states alphabet (transition function) (initial state) (accepting states)
 
 instance (Show a, Show b) => Show (DFA a b) where
   showsPrec _ (DFA states alphabet transition starting accepting) =

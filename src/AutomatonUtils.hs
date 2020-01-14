@@ -1,16 +1,3 @@
-{- |
-Module      :  AutomatonUtils
-Description :  <optional short text displayed on contents page>
-Copyright   :  (c) Tomasz Homoncik, 2020
-License     :  MIT
-
-Maintainer  :  tjhomoncik@gmail.com
-Stability   :  experimental
-Portability :  portable
-
-Here is a longer description of this module, containing some
-commentary with @some markup@.
--}
 module AutomatonUtils
   ( reverse
   , toDfa
